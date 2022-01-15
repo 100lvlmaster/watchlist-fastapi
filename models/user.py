@@ -25,7 +25,7 @@ class User(BaseModel):
         }
 
 
-class CreateUser(BaseModel):
+class UserIn(BaseModel):
     username: str
     fullname: str = Field(...)
     email: EmailStr = Field(...)
