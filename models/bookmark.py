@@ -1,30 +1,21 @@
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, AnyHttpUrl
+from models.base import BaseMeta
 from utils.timestamp import Timestamp
-from bson_models import PyObjectId
-from bson import ObjectId
+import ormar
 
 
-class Bookmark(BaseModel):
-    id: PyObjectId = Field(default_factory=PyObjectId, alias="_id")
-    url: str
-    title: str
-    imgUrl: str
-    description: str
-    site_name: str
-    createdAt: int = Timestamp()
-    updatedAt: int = Timestamp()
+class Bookmark(ormar.Model):
+    class Meta(BaseMeta):
+        tablename = 'users'
+    id: int = ormar.UUID(primary_key=True)
+    url: str = ormar.String()
+    img: str = ormar.String()
+    title: str = ormar.String()
+    description: str = ormar.String()
+    site_name: str = ormar.String()
+    createdAt: int = ormar.Time()
+    updatedAt: int = ormar.Time()
 
-    class Config:
-        allow_population_by_field_name = True
-        arbitrary_types_allowed = True
-        json_encoders = {ObjectId: str}
-        schema_extra = {
-            "example": {
-                "id": "somteth",
-                "url": "https://youtube.com",
-                "title": "yo",
-                "description": "this description",
-                "imgUrl": "https://www.youtube.com/favicon.ico",
-                "site_name": "Youtube"
-            }
-        }
+
+class BookmarkIn(BaseModel):
+    url: AnyHttpUrl = Field(...)

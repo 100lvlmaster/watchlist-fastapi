@@ -5,7 +5,7 @@ from routes import user, bookmark, auth
 from fastapi_jwt_auth.exceptions import AuthJWTException
 from fastapi.responses import JSONResponse
 from fastapi_jwt_auth import AuthJWT
-
+from database.db import database
 app = FastAPI()
 app.include_router(auth.router)
 app.include_router(user.router)
@@ -19,7 +19,7 @@ def get_config():
 
 @app.get("/", tags="root")
 async def hello_world(Authorize: AuthJWT = Depends()):
-    Authorize.jwt_required()
+    # Authorize.jwt_required()
     return {"Hello world"}
 
 
@@ -29,3 +29,15 @@ async def authjwt_exception_handler(request: Request, exc: AuthJWTException):
         status_code=exc.status_code,
         content={"detail": exc.message}
     )
+
+
+@app.on_event("startup")
+async def startup():
+    if not database.is_connected:
+        await database.connect()
+
+
+@app.on_event("shutdown")
+async def shutdown():
+    if database.is_connected:
+        await database.disconnect()

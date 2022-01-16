@@ -2,14 +2,13 @@ from fastapi import APIRouter, HTTPException
 from fastapi.params import Depends
 from fastapi_jwt_auth.auth_jwt import AuthJWT
 from models.user import UserIn, User
-from database.client import users
 #
 router = APIRouter(prefix="/auth")
 #
 
 
 @router.post("/login")
-async def login(user: UserIn, Authorize: AuthJWT = Depends()):
+async def login(user: UserIn):
     # existing_user = await users.find_one({'email': user.email})
     # refresh_token = Authorize.create_refresh_token(subject=user.email)
     # access_token = Authorize.create_access_token(subject=user.email)
