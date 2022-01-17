@@ -1,4 +1,5 @@
 from decouple import config
+
 MONGODB_URL = config("MONGO_CON")
 MAX_CONNECTIONS_COUNT = 10
 MIN_CONNECTIONS_COUNT = 10

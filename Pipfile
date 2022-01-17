@@ -4,7 +4,16 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-python-decouple = "*"
+databases = "*"
+ormar = "*"
+sqlalchemy = "*"
+uvicorn = "*"
+fastapi = "*"
+bs4 = "*"
+fastapi-jwt-auth = "*"
+python-multipart = "*"
+pydantic = {extras = ["email"], version = "*"}
+python-dotenv = "*"
 
 [dev-packages]
 black = "*"

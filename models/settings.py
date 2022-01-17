@@ -1,6 +1,6 @@
 from pydantic import BaseModel
-from decouple import config
+import os
 
 
 class Settings(BaseModel):
-    authjwt_secret_key: str = config('JWT_SECRET')
+    authjwt_secret_key: str = os.environ["JWT_SECRET"]
